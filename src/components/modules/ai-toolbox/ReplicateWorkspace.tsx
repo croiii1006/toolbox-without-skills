@@ -83,6 +83,7 @@ interface ReplicateHistoryItem {
   promptText: string;
   inspirationVideo?: InspirationVideo | null;
   status: HistoryStatus;
+  generatedVideoUrl?: string | null;
 }
 
 const REPLICATE_HISTORY_KEY = 'replicate-workspace-history';
@@ -337,11 +338,12 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
     try {
       // Mock video generation (4s)
       await new Promise((r) => setTimeout(r, 4000));
-      setGeneratedVideoUrl('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4');
+      const videoUrl = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+      setGeneratedVideoUrl(videoUrl);
       setConvStep('done');
-      // Update history status to completed
+      // Update history status to completed and save video URL
       setHistory(prev => {
-        const updated = prev.map((h, i) => i === 0 ? { ...h, status: 'completed' as HistoryStatus } : h);
+        const updated = prev.map((h, i) => i === 0 ? { ...h, status: 'completed' as HistoryStatus, generatedVideoUrl: videoUrl } : h);
         saveReplicateHistory(updated);
         return updated;
       });
@@ -394,7 +396,23 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
 
     const prompt = item.promptText || `产品特写镜头，柔和暖色灯光，缓慢推拉运镜，背景虚化，商品居中展示。\n\n核心卖点融入：${item.sellingPoints.join('、')}。\n\n电商广告风格，高清画质，节奏紧凑，适合 TikTok 短视频传播。`;
     setExtractedPromptText(prompt);
+    setReplicatePrompt(prompt);
+    setExtractedOriginalPrompt('');
     setIsExtracting(false);
+    setErrorInfo(null);
+
+    // Restore generated video if available
+    if (item.generatedVideoUrl) {
+      setGeneratedVideoUrl(item.generatedVideoUrl);
+      setConvStep('done');
+    } else if (item.status === 'completed' || item.promptText) {
+      setGeneratedVideoUrl(null);
+      setConvStep('fused');
+    } else {
+      setGeneratedVideoUrl(null);
+      setConvStep('extracting');
+    }
+
     setViewMode('conversation');
   };
 

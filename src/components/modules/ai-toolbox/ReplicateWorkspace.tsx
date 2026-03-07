@@ -83,6 +83,7 @@ interface ReplicateHistoryItem {
   promptText: string;
   inspirationVideo?: InspirationVideo | null;
   status: HistoryStatus;
+  generatedVideoUrl?: string | null;
 }
 
 const REPLICATE_HISTORY_KEY = 'replicate-workspace-history';

@@ -119,11 +119,18 @@ export function TikTokReport({ onNavigate }: TikTokReportProps) {
     setPhase('compose');
   };
 
-  const handleReplicate = (videoId: string) => {
+  const handleReplicate = (videoId: string, videoTitle?: string, viewCountText?: string, likeCountText?: string) => {
     setPrefill({
       tiktokLink: `https://www.tiktok.com/video/${videoId}`,
       sellingPoints,
-      autoStart: true,
+      autoStart: false,
+      inspirationVideo: {
+        id: videoId,
+        title: videoTitle || 'TikTok 视频',
+        views: viewCountText || '',
+        likes: likeCountText || '',
+        coverGradient: 'from-rose-500/60 to-orange-400/60',
+      },
     });
     onNavigate?.('replicate-video');
   };

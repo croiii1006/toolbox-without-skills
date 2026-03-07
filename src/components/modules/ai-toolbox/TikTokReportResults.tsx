@@ -76,7 +76,7 @@ interface TikTokReportResultsProps {
   category: string;
   sellingPoints: string[];
   onBack: () => void;
-  onReplicate: (videoId: string) => void;
+  onReplicate: (videoId: string, videoTitle?: string, viewCountText?: string, likeCountText?: string) => void;
 }
 
 export function TikTokReportResults({ category, sellingPoints, onBack, onReplicate }: TikTokReportResultsProps) {

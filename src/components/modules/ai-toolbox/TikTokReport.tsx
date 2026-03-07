@@ -1,20 +1,96 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TikTokReportComposer } from './TikTokReportComposer';
 import { TikTokReportResults } from './TikTokReportResults';
 import { useTikTokInspiration } from '@/contexts/TikTokInspirationContext';
 import { useReplicatePrefill } from '@/contexts/ReplicatePrefillContext';
 import { statusConfig } from '@/types/history';
-import { History, X } from 'lucide-react';
+import { History, X, Loader2 } from 'lucide-react';
 import {
   Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger,
 } from '@/components/ui/sheet';
+import { motion } from 'framer-motion';
 
 interface TikTokReportProps {
   onNavigate?: (itemId: string) => void;
 }
 
+function LoadingPage() {
+  const tips = [
+    '正在扫描 TikTok 热门视频...',
+    '分析视频内容与卖点匹配度...',
+    '筛选播放量最高的爆款视频...',
+    '整理数据生成报告...',
+  ];
+  const [tipIndex, setTipIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTipIndex((prev) => (prev + 1) % tips.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="min-h-full flex flex-col items-center justify-center p-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col items-center gap-6 max-w-md text-center"
+      >
+        {/* Animated loader */}
+        <div className="relative w-16 h-16">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+            className="w-16 h-16 rounded-full border-[3px] border-muted/30 border-t-foreground/70"
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-lg">🔍</span>
+          </div>
+        </div>
+
+        <div>
+          <h2 className="text-lg font-medium text-foreground/90 mb-2">
+            正在为你收集匹配度最高的爆款TikTok视频...
+          </h2>
+          <motion.p
+            key={tipIndex}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.4 }}
+            className="text-sm text-muted-foreground"
+          >
+            {tips[tipIndex]}
+          </motion.p>
+        </div>
+
+        {/* Progress dots */}
+        <div className="flex items-center gap-1.5 mt-2">
+          {[0, 1, 2, 3].map((i) => (
+            <motion.div
+              key={i}
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.3, 1, 0.3],
+              }}
+              transition={{
+                duration: 1.2,
+                repeat: Infinity,
+                delay: i * 0.2,
+              }}
+              className="w-1.5 h-1.5 rounded-full bg-foreground/50"
+            />
+          ))}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 export function TikTokReport({ onNavigate }: TikTokReportProps) {
-  const [submitted, setSubmitted] = useState(false);
+  const [phase, setPhase] = useState<'compose' | 'loading' | 'results'>('compose');
   const [category, setCategory] = useState('');
   const [sellingPoints, setSellingPoints] = useState<string[]>([]);
   const { reportHistory, addReportHistory, updateReportHistoryStatus, deleteReportHistory } = useTikTokInspiration();
@@ -23,21 +99,24 @@ export function TikTokReport({ onNavigate }: TikTokReportProps) {
   const handleSubmit = (payload: { category: string; sellingPoints: string[] }) => {
     setCategory(payload.category);
     setSellingPoints(payload.sellingPoints);
+    setPhase('loading');
     const historyId = addReportHistory({
       category: payload.category,
       sellingPoints: payload.sellingPoints,
       videoCount: 6,
       status: 'in_progress',
     });
-    // Simulate completion after a short delay
-    setTimeout(() => updateReportHistoryStatus(historyId, 'completed'), 3000);
-    setSubmitted(true);
+    // Simulate completion after delay
+    setTimeout(() => {
+      updateReportHistoryStatus(historyId, 'completed');
+      setPhase('results');
+    }, 5000);
   };
 
   const handleBack = () => {
     setCategory('');
     setSellingPoints([]);
-    setSubmitted(false);
+    setPhase('compose');
   };
 
   const handleReplicate = (videoId: string) => {
@@ -52,10 +131,14 @@ export function TikTokReport({ onNavigate }: TikTokReportProps) {
   const handleRestoreHistory = (item: { category: string; sellingPoints: string[] }) => {
     setCategory(item.category);
     setSellingPoints(item.sellingPoints);
-    setSubmitted(true);
+    setPhase('results');
   };
 
-  if (submitted) {
+  if (phase === 'loading') {
+    return <LoadingPage />;
+  }
+
+  if (phase === 'results') {
     return (
       <TikTokReportResults
         category={category}

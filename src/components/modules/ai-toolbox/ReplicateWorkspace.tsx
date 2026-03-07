@@ -338,11 +338,12 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
     try {
       // Mock video generation (4s)
       await new Promise((r) => setTimeout(r, 4000));
-      setGeneratedVideoUrl('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4');
+      const videoUrl = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+      setGeneratedVideoUrl(videoUrl);
       setConvStep('done');
-      // Update history status to completed
+      // Update history status to completed and save video URL
       setHistory(prev => {
-        const updated = prev.map((h, i) => i === 0 ? { ...h, status: 'completed' as HistoryStatus } : h);
+        const updated = prev.map((h, i) => i === 0 ? { ...h, status: 'completed' as HistoryStatus, generatedVideoUrl: videoUrl } : h);
         saveReplicateHistory(updated);
         return updated;
       });

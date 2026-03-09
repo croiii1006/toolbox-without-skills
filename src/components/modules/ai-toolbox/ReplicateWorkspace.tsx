@@ -142,6 +142,17 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
   /* ── History ── */
   const [history, setHistory] = useState<ReplicateHistoryItem[]>(loadReplicateHistory);
 
+  /* ── Past conversation runs ── */
+  interface PastRun {
+    id: string;
+    videoName: string;
+    sellingPoints: string[];
+    prompt: string;
+    generatedVideoUrl: string | null;
+    inspirationVideo: InspirationVideo | null;
+  }
+  const [pastRuns, setPastRuns] = useState<PastRun[]>([]);
+
   /* ── Action & Status ── */
   const hasVideoSource = !!(styleVideoFile || inspirationVideo);
   const canSend = hasVideoSource && sellingPoints.length > 0;

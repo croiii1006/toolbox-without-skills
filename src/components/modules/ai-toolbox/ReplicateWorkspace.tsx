@@ -377,7 +377,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
       });
       setConvStep('fused');
     }
-  }, []);
+  }, [generatedVideoUrl, replicatePrompt]);
 
   const addSellingPoint = (value: string) => {
     const trimmed = value.trim();

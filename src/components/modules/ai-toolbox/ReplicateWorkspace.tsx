@@ -293,6 +293,18 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
     setHistory(updated);
     saveReplicateHistory(updated);
 
+    // Save current run to past runs if there's an existing conversation
+    if (viewMode === 'conversation' && replicatePrompt) {
+      setPastRuns(prev => [...prev, {
+        id: crypto.randomUUID(),
+        videoName: styleVideoFile?.name || inspirationVideo?.title || '—',
+        sellingPoints: [...sellingPoints],
+        prompt: replicatePrompt,
+        generatedVideoUrl,
+        inspirationVideo: inspirationVideo || null,
+      }]);
+    }
+
     setViewMode('conversation');
     setConvStep('fusing');
     setExtractedOriginalPrompt('');

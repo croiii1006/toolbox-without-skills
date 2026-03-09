@@ -617,7 +617,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
             </React.Fragment>
             )}
 
-            {/* ── Current round: prompt card (no edit button after done) ── */}
+            {/* ── Current round: prompt card (editable before confirming) ── */}
             {stepIndex >= 3 && replicatePrompt && !isEditingPrompt &&
             <div className="rounded-xl border border-primary/30 bg-card/60 p-4 space-y-3 animate-fade-in">
                 <div className="flex items-center justify-between">
@@ -626,6 +626,14 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                     <span>复刻视频prompt已生成！</span>
                   </div>
                   <div className="flex items-center gap-2">
+                    {convStep === 'fused' &&
+                    <button
+                      onClick={() => setIsEditingPrompt(true)}
+                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
+                      <Edit3 className="w-3 h-3" />
+                      编辑
+                    </button>
+                    }
                     <button
                     onClick={handleCopyPrompt}
                     className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">

@@ -344,6 +344,14 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
   }, [canSend, styleVideoFile, sellingPoints, settings, inspirationVideo, history, productImageFile]);
 
   const handleConfirmReplicate = useCallback(async () => {
+    // Save current video as past video before regenerating
+    if (generatedVideoUrl) {
+      setPastVideos(prev => [...prev, {
+        id: crypto.randomUUID(),
+        url: generatedVideoUrl,
+        prompt: replicatePrompt,
+      }]);
+    }
     setConvStep('replicating');
     setErrorInfo(null);
     try {

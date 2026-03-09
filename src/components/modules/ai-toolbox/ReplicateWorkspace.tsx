@@ -152,6 +152,13 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
     inspirationVideo: InspirationVideo | null;
   }
   const [pastRuns, setPastRuns] = useState<PastRun[]>([]);
+  interface PastVideo {
+    id: string;
+    url: string;
+    prompt: string;
+  }
+  const [pastVideos, setPastVideos] = useState<PastVideo[]>([]);
+  const [pastVideoPreviewUrl, setPastVideoPreviewUrl] = useState<string | null>(null);
 
   /* ── Action & Status ── */
   const hasVideoSource = !!(styleVideoFile || inspirationVideo);
@@ -304,6 +311,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
         inspirationVideo: inspirationVideo || null,
       }]);
     }
+    setPastVideos([]);
 
     setViewMode('conversation');
     setConvStep('fusing');
@@ -337,6 +345,14 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
   }, [canSend, styleVideoFile, sellingPoints, settings, inspirationVideo, history, productImageFile]);
 
   const handleConfirmReplicate = useCallback(async () => {
+    // Save current video as past video before regenerating
+    if (generatedVideoUrl) {
+      setPastVideos(prev => [...prev, {
+        id: crypto.randomUUID(),
+        url: generatedVideoUrl,
+        prompt: replicatePrompt,
+      }]);
+    }
     setConvStep('replicating');
     setErrorInfo(null);
     try {
@@ -362,7 +378,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
       });
       setConvStep('fused');
     }
-  }, []);
+  }, [generatedVideoUrl, replicatePrompt]);
 
   const addSellingPoint = (value: string) => {
     const trimmed = value.trim();
@@ -496,7 +512,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
         {/* ── Top bar ── */}
         <div className="shrink-0 px-6 py-3 border-b border-border/20 flex items-center gap-2">
           <button
-            onClick={() => {setViewMode('composer');setExtractedPromptText('');setSellingPoints([]);setStyleVideoFile(null);setStyleVideoUrl(null);setProductImageFile(null);setProductImageUrl(null);setInspirationVideo(null);setGeneratedVideoUrl(null);setPastRuns([]);}}
+            onClick={() => {setViewMode('composer');setExtractedPromptText('');setSellingPoints([]);setStyleVideoFile(null);setStyleVideoUrl(null);setProductImageFile(null);setProductImageUrl(null);setInspirationVideo(null);setGeneratedVideoUrl(null);setPastRuns([]);setPastVideos([]);}}
             className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors">
             <ArrowLeft className="w-3.5 h-3.5" />
             返回
@@ -530,12 +546,26 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                   <p className="text-sm text-foreground/60 leading-relaxed whitespace-pre-line">{run.prompt}</p>
                 </div>
                 {run.generatedVideoUrl && (
-                  <div className="rounded-xl border border-border/30 bg-card/60 p-4 space-y-2">
-                    <div className="flex items-center gap-2 text-xs text-foreground/70">
-                      <Check className="w-3.5 h-3.5 text-emerald-500" />
-                      <span>复刻视频已完成</span>
+                  <div className="rounded-xl border border-border/30 bg-card/60 p-3 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-xs text-foreground/70">
+                        <Check className="w-3.5 h-3.5 text-emerald-500" />
+                        <span>复刻视频已完成</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <a href={run.generatedVideoUrl} download="replicated-video.mp4" className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
+                          <Download className="w-3 h-3" />
+                          下载
+                        </a>
+                        <button onClick={() => setPastVideoPreviewUrl(run.generatedVideoUrl)} className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
+                          <Maximize2 className="w-3 h-3" />
+                          放大
+                        </button>
+                      </div>
                     </div>
-                    <video src={run.generatedVideoUrl} muted loop playsInline className="w-full max-h-[200px] object-contain rounded-lg" />
+                    <div className="relative rounded-lg overflow-hidden bg-muted/20 cursor-pointer" onClick={() => setPastVideoPreviewUrl(run.generatedVideoUrl)}>
+                      <video src={run.generatedVideoUrl} muted loop playsInline className="w-full max-h-[160px] object-contain" />
+                    </div>
                   </div>
                 )}
                 <div className="border-b border-border/10 my-2" />
@@ -707,6 +737,31 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
               </div>
             }
 
+            {/* ── Past videos from regeneration ── */}
+            {pastVideos.map((pv) => (
+              <div key={pv.id} className="rounded-xl border border-border/30 bg-card/60 p-3 space-y-2 animate-fade-in">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs text-foreground/70">
+                    <Check className="w-3.5 h-3.5 text-emerald-500" />
+                    <span>复刻视频已完成</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <a href={pv.url} download="replicated-video.mp4" className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
+                      <Download className="w-3 h-3" />
+                      下载
+                    </a>
+                    <button onClick={() => setPastVideoPreviewUrl(pv.url)} className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/30 transition-colors">
+                      <Maximize2 className="w-3 h-3" />
+                      放大
+                    </button>
+                  </div>
+                </div>
+                <div className="relative rounded-lg overflow-hidden bg-muted/20 cursor-pointer" onClick={() => setPastVideoPreviewUrl(pv.url)}>
+                  <video src={pv.url} muted loop playsInline className="w-full max-h-[160px] object-contain" />
+                </div>
+              </div>
+            ))}
+
             {/* ── Step 6: Video done ── */}
             {convStep === 'done' && generatedVideoUrl &&
             <div className="rounded-xl border border-border/30 bg-card/60 p-4 space-y-3 animate-fade-in">
@@ -772,7 +827,21 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
               controls
               playsInline
               className="w-full rounded-lg" />
+            }
+          </DialogContent>
+        </Dialog>
 
+        {/* Past video fullscreen dialog */}
+        <Dialog open={!!pastVideoPreviewUrl} onOpenChange={() => setPastVideoPreviewUrl(null)}>
+          <DialogContent className="max-w-4xl p-2 bg-background/95 backdrop-blur-sm">
+            <DialogTitle className="sr-only">历史视频预览</DialogTitle>
+            {pastVideoPreviewUrl &&
+            <video
+              src={pastVideoPreviewUrl}
+              autoPlay
+              controls
+              playsInline
+              className="w-full rounded-lg" />
             }
           </DialogContent>
         </Dialog>

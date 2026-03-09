@@ -507,6 +507,41 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
         <div className="flex-1 overflow-y-auto">
           <div className="max-w-2xl mx-auto px-6 py-8 space-y-5">
 
+            {/* ── Past conversation runs ── */}
+            {pastRuns.map((run) => (
+              <div key={run.id} className="space-y-3 opacity-60">
+                <div className="rounded-xl border border-border/20 bg-muted/10 p-4 space-y-2">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Video className="w-3.5 h-3.5" />
+                    <span>对标视频：{run.videoName}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-xs text-muted-foreground">卖点：</span>
+                    {run.sellingPoints.map((p) => (
+                      <span key={p} className="inline-flex h-5 items-center rounded-full bg-muted/40 border border-border/20 px-2 text-[11px] text-foreground/70">{p}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="rounded-xl border border-border/30 bg-card/60 p-4 space-y-2">
+                  <div className="flex items-center gap-2 text-xs text-foreground/70">
+                    <Sparkles className="w-3.5 h-3.5 text-primary" />
+                    <span>复刻视频prompt已生成！</span>
+                  </div>
+                  <p className="text-sm text-foreground/60 leading-relaxed whitespace-pre-line line-clamp-3">{run.prompt}</p>
+                </div>
+                {run.generatedVideoUrl && (
+                  <div className="rounded-xl border border-border/30 bg-card/60 p-4 space-y-2">
+                    <div className="flex items-center gap-2 text-xs text-foreground/70">
+                      <Check className="w-3.5 h-3.5 text-emerald-500" />
+                      <span>复刻视频已完成</span>
+                    </div>
+                    <video src={run.generatedVideoUrl} muted loop playsInline className="w-full max-h-[200px] object-contain rounded-lg" />
+                  </div>
+                )}
+                <div className="border-b border-border/10 my-2" />
+              </div>
+            ))}
+
             {/* Summary card */}
             <div className="rounded-xl border border-border/20 bg-muted/10 p-4 space-y-2">
               <button

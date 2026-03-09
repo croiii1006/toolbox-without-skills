@@ -152,6 +152,13 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
     inspirationVideo: InspirationVideo | null;
   }
   const [pastRuns, setPastRuns] = useState<PastRun[]>([]);
+  interface PastVideo {
+    id: string;
+    url: string;
+    prompt: string;
+  }
+  const [pastVideos, setPastVideos] = useState<PastVideo[]>([]);
+  const [pastVideoPreviewUrl, setPastVideoPreviewUrl] = useState<string | null>(null);
 
   /* ── Action & Status ── */
   const hasVideoSource = !!(styleVideoFile || inspirationVideo);

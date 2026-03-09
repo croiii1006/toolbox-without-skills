@@ -195,24 +195,19 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
     if (data.autoStart) {
       setTimeout(() => {
         setViewMode('conversation');
-        setConvStep('extracting');
+        setConvStep('fusing');
         setIsExtracting(true);
         setExtractedPromptText('');
         setPromptCopied(false);
         setTimeout(async () => {
-          const origPrompt = `开场：产品从画面底部升起，伴随粒子特效，镜头缓慢推近。\n中段：多角度展示产品细节，柔和暖色调灯光，浅景深背景虚化。\n收尾：品牌logo淡入，配合节奏感音乐收束。\n整体风格：高端电商广告，节奏紧凑，适合短视频传播。`;
-          setExtractedOriginalPrompt(origPrompt);
-          setConvStep('extracted');
-          await new Promise((r) => setTimeout(r, 1500));
-          setConvStep('fusing');
-          await new Promise((r) => setTimeout(r, 2000));
+          await new Promise((r) => setTimeout(r, 2500));
           const mockPrompt = `产品特写镜头，柔和暖色灯光，缓慢推拉运镜，背景虚化，商品居中展示。\n\n核心卖点融入：${data.sellingPoints.join('、')}。\n\n电商广告风格，高清画质，节奏紧凑，适合 TikTok 短视频传播。`;
           setReplicatePrompt(mockPrompt);
           setExtractedPromptText(mockPrompt);
           setConvStep('fused');
           setIsExtracting(false);
-          toast.success('复刻 Prompt 已生成');
-        }, 2500);
+          toast.success('复刻视频prompt已生成！');
+        }, 0);
       }, 0);
     }
   }, [consumePrefill]);
@@ -288,7 +283,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
     saveReplicateHistory(updated);
 
     setViewMode('conversation');
-    setConvStep('extracting');
+    setConvStep('fusing');
     setExtractedOriginalPrompt('');
     setReplicatePrompt('');
     setGeneratedVideoUrl(null);
@@ -303,28 +298,14 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
     console.log('ExtractPayload:', extractPayload);
 
     try {
-      // Step 1: Extract original prompt (2.5s)
-      await new Promise((r) => setTimeout(r, 2500));
-      const origPrompt = `开场：产品从画面底部升起，伴随粒子特效，镜头缓慢推近。\n中段：多角度展示产品细节，柔和暖色调灯光，浅景深背景虚化。\n收尾：品牌logo淡入，配合节奏感音乐收束。\n整体风格：高端电商广告，节奏紧凑，适合短视频传播。`;
-      setExtractedOriginalPrompt(origPrompt);
-      setConvStep('extracted');
-    } catch {
-      setErrorInfo({ step: 'extracting', message: '反推对标视频 Prompt 失败，请检查网络后重试' });
-      setIsExtracting(false);
-      return;
-    }
-
-    try {
-      // Step 2: Fuse selling points + product image (2s)
-      await new Promise((r) => setTimeout(r, 1500));
-      setConvStep('fusing');
+      // Generate replicate prompt by combining selling points
       await new Promise((r) => setTimeout(r, 2000));
       const fusePrompt = `产品特写镜头，柔和暖色灯光，缓慢推拉运镜，背景虚化，商品居中展示。\n\n核心卖点融入：${sellingPoints.join('、')}。${productImageFile ? '\n\n参考商品白底图进行产品外观还原。' : ''}\n\n电商广告风格，高清画质，节奏紧凑，适合 TikTok 短视频传播。`;
       setReplicatePrompt(fusePrompt);
       setExtractedPromptText(fusePrompt);
       setConvStep('fused');
       setIsExtracting(false);
-      toast.success('复刻 Prompt 已生成');
+      toast.success('复刻视频prompt已生成！');
     } catch {
       setErrorInfo({ step: 'fusing', message: '生成复刻 Prompt 失败，请检查网络后重试' });
       setIsExtracting(false);
@@ -560,55 +541,10 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
               </DialogContent>
             </Dialog>
 
-            {convStep === 'extracting' && !errorInfo &&
-            <div className="flex items-center gap-2 text-sm text-muted-foreground animate-fade-in">
-                <Loader2 className="w-4 h-4 animate-spin text-primary" />
-                <span>正在为你反推对标视频 prompt...</span>
-              </div>
-            }
-
-            {/* ── Error: extracting failed ── */}
-            {errorInfo?.step === 'extracting' &&
-            <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-4 space-y-2 animate-fade-in">
-                <div className="flex items-center gap-2 text-sm text-destructive">
-                  <AlertCircle className="w-4 h-4" />
-                  <span>{errorInfo.message}</span>
-                </div>
-                <button
-                onClick={() => {setErrorInfo(null);handleSend();}}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-destructive/10 text-destructive hover:bg-destructive/20 transition-colors">
-                  <RefreshCw className="w-3 h-3" />
-                  重试
-                </button>
-              </div>
-            }
-
-            {/* ── Step 2: Original prompt extracted ── */}
-            {stepIndex >= 1 && extractedOriginalPrompt &&
-            <div className="rounded-xl border border-border/30 bg-card/60 p-4 space-y-3 animate-fade-in">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-xs text-foreground/70">
-                    <Check className="w-3.5 h-3.5 text-emerald-500" />
-                    <span>对标视频 prompt 反推已完成</span>
-                  </div>
-                  {shouldCollapse &&
-                <button
-                  onClick={() => setOriginalPromptExpanded(!originalPromptExpanded)}
-                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
-                      {originalPromptExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-                      <span>{originalPromptExpanded ? '收起' : '展开'}</span>
-                    </button>
-                }
-                </div>
-                <p className="text-sm text-foreground/60 leading-relaxed whitespace-pre-line select-text">{displayOriginalPrompt}</p>
-              </div>
-            }
-
-            {/* ── Step 3: Fusing selling points + product image ── */}
             {convStep === 'fusing' && !errorInfo &&
             <div className="flex items-center gap-2 text-sm text-muted-foreground animate-fade-in">
                 <Loader2 className="w-4 h-4 animate-spin text-primary" />
-                <span>正在融合卖点和产品图，为你生成专属复刻 prompt...</span>
+                <span>正在结合卖点（{sellingPoints.join('、')}），为您生成复刻视频prompt...</span>
               </div>
             }
 
@@ -634,7 +570,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-xs text-foreground/70">
                     <Sparkles className="w-3.5 h-3.5 text-primary" />
-                    <span>复刻 Prompt</span>
+                    <span>复刻视频prompt已生成！</span>
                   </div>
                   <div className="flex items-center gap-2">
                     {!isEditingPrompt && (convStep === 'fused' || convStep === 'done') &&

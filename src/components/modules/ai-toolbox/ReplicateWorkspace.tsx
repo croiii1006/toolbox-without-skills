@@ -311,6 +311,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
         inspirationVideo: inspirationVideo || null,
       }]);
     }
+    setPastVideos([]);
 
     setViewMode('conversation');
     setConvStep('fusing');

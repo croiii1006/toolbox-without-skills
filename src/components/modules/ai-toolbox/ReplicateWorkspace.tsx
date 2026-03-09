@@ -305,7 +305,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
       setExtractedPromptText(fusePrompt);
       setConvStep('fused');
       setIsExtracting(false);
-      toast.success('复刻 Prompt 已生成');
+      toast.success('复刻视频prompt已生成！');
     } catch {
       setErrorInfo({ step: 'fusing', message: '生成复刻 Prompt 失败，请检查网络后重试' });
       setIsExtracting(false);

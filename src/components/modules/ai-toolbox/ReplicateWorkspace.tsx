@@ -195,24 +195,19 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
     if (data.autoStart) {
       setTimeout(() => {
         setViewMode('conversation');
-        setConvStep('extracting');
+        setConvStep('fusing');
         setIsExtracting(true);
         setExtractedPromptText('');
         setPromptCopied(false);
         setTimeout(async () => {
-          const origPrompt = `开场：产品从画面底部升起，伴随粒子特效，镜头缓慢推近。\n中段：多角度展示产品细节，柔和暖色调灯光，浅景深背景虚化。\n收尾：品牌logo淡入，配合节奏感音乐收束。\n整体风格：高端电商广告，节奏紧凑，适合短视频传播。`;
-          setExtractedOriginalPrompt(origPrompt);
-          setConvStep('extracted');
-          await new Promise((r) => setTimeout(r, 1500));
-          setConvStep('fusing');
-          await new Promise((r) => setTimeout(r, 2000));
+          await new Promise((r) => setTimeout(r, 2500));
           const mockPrompt = `产品特写镜头，柔和暖色灯光，缓慢推拉运镜，背景虚化，商品居中展示。\n\n核心卖点融入：${data.sellingPoints.join('、')}。\n\n电商广告风格，高清画质，节奏紧凑，适合 TikTok 短视频传播。`;
           setReplicatePrompt(mockPrompt);
           setExtractedPromptText(mockPrompt);
           setConvStep('fused');
           setIsExtracting(false);
-          toast.success('复刻 Prompt 已生成');
-        }, 2500);
+          toast.success('复刻视频prompt已生成！');
+        }, 0);
       }, 0);
     }
   }, [consumePrefill]);

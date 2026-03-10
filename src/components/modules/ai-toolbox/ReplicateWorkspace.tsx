@@ -496,7 +496,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
         {/* ── Top bar ── */}
         <div className="shrink-0 px-6 py-3 border-b border-border/20 flex items-center gap-2">
           <button
-            onClick={() => {setViewMode('composer');setExtractedPromptText('');setSellingPoints([]);setStyleVideoFile(null);setStyleVideoUrl(null);setProductImageFile(null);setProductImageUrl(null);setInspirationVideo(null);setGeneratedVideoUrl(null);setCompletedRounds([]);}}
+            onClick={() => {setViewMode('composer');setExtractedPromptText('');setSellingPoints([]);setStyleVideoFile(null);setStyleVideoUrl(null);setProductImageFile(null);setProductImageUrl(null);setInspirationVideo(null);setGeneratedVideoUrl(null);setCompletedRounds([]);setSelectedMemoryIds([]);}}
             className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors">
             <ArrowLeft className="w-3.5 h-3.5" />
             返回

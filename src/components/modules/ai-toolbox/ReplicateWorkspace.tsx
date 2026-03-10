@@ -1007,6 +1007,15 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
         </Tabs>
       </div>
     </div>
+
+      {/* Memory selection dialog */}
+      <MemorySelectionDialog
+        open={memoryDialogOpen}
+        onOpenChange={setMemoryDialogOpen}
+        items={memoryItems}
+        selectedIds={selectedMemoryIds}
+        onToggle={toggleMemory}
+      />
     </div>);
 
 }

@@ -541,7 +541,7 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
                     const entry = entries.find((e) => e.id === id);
                     if (!entry) return null;
                     return (
-                      <button
+                      <span
                         key={id}
                         className="inline-flex h-5 items-center gap-1 rounded-full bg-primary/10 border border-primary/20 px-2 text-[11px] text-primary"
                       >

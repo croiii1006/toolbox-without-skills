@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import {
   Video,
   ImageIcon,
@@ -23,7 +23,8 @@ import {
   Download,
   Edit3,
   AlertCircle,
-  RefreshCw } from
+  RefreshCw,
+  Database } from
 'lucide-react';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import {
@@ -36,6 +37,9 @@ import { type HistoryStatus, statusConfig } from '@/types/history';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { useMemory } from '@/contexts/MemoryContext';
+import { MemorySelectionDialog } from '@/components/modules/memory/MemorySelectionDialog';
+import { Button } from '@/components/ui/button';
 
 /* ─── Field Contract Types (DO NOT MODIFY) ─── */
 
@@ -126,6 +130,17 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
   const { t } = useTranslation();
   const { savedVideos, unsaveVideo } = useTikTokInspiration();
   const { consumePrefill } = useReplicatePrefill();
+  const { entries } = useMemory();
+
+  /* ── Memory ── */
+  const [selectedMemoryIds, setSelectedMemoryIds] = useState<string[]>([]);
+  const [memoryDialogOpen, setMemoryDialogOpen] = useState(false);
+  const memoryItems = useMemo(() => entries.map((e) => ({
+    id: e.id, name: e.title, desc: e.content.slice(0, 60), tag: e.category, charCount: e.content.length,
+  })), [entries]);
+  const toggleMemory = useCallback((id: string) => {
+    setSelectedMemoryIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
+  }, []);
 
   /* ── Input Side ── */
   const [styleVideoFile, setStyleVideoFile] = useState<File | null>(null);
@@ -907,7 +922,21 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
           </div>
 
           {/* Bottom toolbar */}
-          <div className="flex items-center justify-end px-5 py-3 border-t border-border/20">
+          <div className="flex items-center justify-between px-5 py-3 border-t border-border/20">
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                className={cn(
+                  "h-7 gap-1 px-2 text-xs hover:text-foreground",
+                  selectedMemoryIds.length > 0 ? "text-foreground" : "text-muted-foreground"
+                )}
+                onClick={() => setMemoryDialogOpen(true)}
+              >
+                <Database className="h-3.5 w-3.5" />
+                记忆库{selectedMemoryIds.length > 0 ? ` (${selectedMemoryIds.length})` : ''}
+              </Button>
+            </div>
             <div className="flex items-center gap-3">
               
               <button
@@ -978,6 +1007,15 @@ export function ReplicateWorkspace({ onNavigate }: ReplicateWorkspaceProps) {
         </Tabs>
       </div>
     </div>
+
+      {/* Memory selection dialog */}
+      <MemorySelectionDialog
+        open={memoryDialogOpen}
+        onOpenChange={setMemoryDialogOpen}
+        items={memoryItems}
+        selectedIds={selectedMemoryIds}
+        onToggle={toggleMemory}
+      />
     </div>);
 
 }

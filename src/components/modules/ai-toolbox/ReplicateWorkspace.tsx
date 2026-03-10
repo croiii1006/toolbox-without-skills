@@ -23,7 +23,8 @@ import {
   Download,
   Edit3,
   AlertCircle,
-  RefreshCw } from
+  RefreshCw,
+  Database } from
 'lucide-react';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import {

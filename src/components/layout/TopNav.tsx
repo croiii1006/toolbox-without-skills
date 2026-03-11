@@ -113,7 +113,7 @@ export function TopNav() {
               </Avatar>
             </button>
           </HoverCardTrigger>
-          <HoverCardContent align="end" className="w-72 p-4 rounded-2xl bg-background/70 backdrop-blur-xl border-border/50">
+          <HoverCardContent align="end" className="w-72 p-4 rounded-2xl bg-popover/70 backdrop-blur-xl border-border/50 shadow-lg">
             <div className="flex flex-col items-center gap-3">
               <Avatar className="w-14 h-14">
                 <AvatarFallback className="bg-primary text-primary-foreground text-lg font-light">

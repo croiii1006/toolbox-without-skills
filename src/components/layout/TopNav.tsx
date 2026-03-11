@@ -53,10 +53,6 @@ export function TopNav() {
           <span className="text-xs font-medium">{i18n.language === 'zh' ? '中文' : 'EN'}</span>
         </Button>
 
-        {/* Notification Bell */}
-        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-foreground/10 w-8 h-8">
-          <Bell className="w-4 h-4" />
-        </Button>
 
         {/* Upgrade + Credits Pill */}
         <button

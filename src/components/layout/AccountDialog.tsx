@@ -56,10 +56,6 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button variant="outline" size="sm" className="gap-1.5 rounded-lg bg-foreground text-background hover:bg-foreground/90">
-                    <UserCog className="w-4 h-4" />
-                    {t('common.editProfile')}
-                  </Button>
                   <Button variant="outline" size="sm" className="gap-1.5 rounded-lg">
                     <LogOut className="w-4 h-4" />
                     {t('common.logout')}

@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
+import { USER_CREDITS, USER_NAME, USER_EMAIL, USER_INITIALS, USER_PLAN } from '@/constants/user';
 
 interface AccountDialogProps {
   open: boolean;
@@ -47,12 +48,12 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                 <div className="flex items-center gap-4">
                   <Avatar className="w-14 h-14">
                     <AvatarFallback className="bg-primary text-primary-foreground text-xl font-semibold">
-                      JD
+                      {USER_INITIALS}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="text-base font-semibold text-foreground">John Doe</p>
-                    <p className="text-sm text-muted-foreground font-light">john.doe@example.com</p>
+                    <p className="text-base font-semibold text-foreground">{USER_NAME}</p>
+                    <p className="text-sm text-muted-foreground font-light">{USER_EMAIL}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -72,11 +73,11 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                 <div className="space-y-4 text-sm">
                   <div className="flex items-center">
                     <span className="text-muted-foreground w-40 font-thin">{t('common.currentPlan')}</span>
-                    <span className="text-foreground font-light">Free</span>
+                    <span className="text-foreground font-light">{USER_PLAN}</span>
                   </div>
                   <div className="flex items-center">
                     <span className="text-muted-foreground w-40 font-light">{t('common.availableCredits')}</span>
-                    <span className="text-foreground font-normal">80</span>
+                    <span className="text-foreground font-normal">{USER_CREDITS}</span>
                   </div>
                 </div>
               </div>
@@ -95,7 +96,7 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                   <span className="flex-1 text-foreground">Daily Login Bonus</span>
                   <span className="w-32 text-center text-muted-foreground">已获取</span>
                   <span className="w-48 text-center text-muted-foreground">2026-03-11 11:27:02</span>
-                  <span className="w-32 text-right text-foreground">+80</span>
+                  <span className="w-32 text-right text-foreground">+{USER_CREDITS}</span>
                 </div>
                 <div className="py-8 text-center text-muted-foreground text-sm">
                   暂无更多数据

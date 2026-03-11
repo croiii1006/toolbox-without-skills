@@ -10,6 +10,7 @@ import { useMemory } from '@/contexts/MemoryContext';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { AccountDialog } from './AccountDialog';
 import { useState } from 'react';
+import { USER_CREDITS, USER_NAME, USER_EMAIL, USER_INITIALS, USER_PLAN } from '@/constants/user';
 
 export function TopNav() {
   const { activeModule, setActiveModule } = useModule();
@@ -66,7 +67,7 @@ export function TopNav() {
               <span className="px-3 py-1.5">{t('common.upgrade')}</span>
               <span className="flex items-center gap-1 px-3 py-1.5 border-l border-border font-light bg-transparent">
                 <Zap className="w-3.5 h-3.5 fill-current" />
-                80
+                {USER_CREDITS}
               </span>
             </a>
           </HoverCardTrigger>
@@ -74,7 +75,7 @@ export function TopNav() {
             <div className="space-y-4">
               {/* Plan + Upgrade */}
               <div className="flex items-center justify-between">
-                <span className="text-lg font-light text-foreground">Free</span>
+                <span className="text-lg font-light text-foreground">{USER_PLAN}</span>
                 <Button size="sm" className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-light px-4" asChild>
                   <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer" className="font-light">
                     {t('common.upgrade')}
@@ -88,7 +89,7 @@ export function TopNav() {
                   <Sparkles className="w-4 h-4" />
                   {t('common.credits')}
                 </div>
-                <span className="text-sm font-light text-foreground">0</span>
+                <span className="text-sm font-light text-foreground">{USER_CREDITS}</span>
               </div>
               
               {/* Usage Details */}
@@ -108,7 +109,7 @@ export function TopNav() {
             <button className="rounded-full focus:outline-none">
               <Avatar className="w-8 h-8 cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all">
                 <AvatarFallback className="bg-primary text-primary-foreground text-xs font-light">
-                  JD
+                  {USER_INITIALS}
                 </AvatarFallback>
               </Avatar>
             </button>
@@ -117,12 +118,12 @@ export function TopNav() {
             <div className="flex flex-col items-center gap-3">
               <Avatar className="w-14 h-14">
                 <AvatarFallback className="bg-primary text-primary-foreground text-lg font-light">
-                  JD
+                  {USER_INITIALS}
                 </AvatarFallback>
               </Avatar>
               <div className="text-center">
-                <p className="text-sm font-light text-foreground">John Doe</p>
-                <p className="text-xs text-muted-foreground truncate max-w-[200px]">john.doe@example.com</p>
+                <p className="text-sm font-light text-foreground">{USER_NAME}</p>
+                <p className="text-xs text-muted-foreground truncate max-w-[200px]">{USER_EMAIL}</p>
               </div>
               <Button
                   size="sm"
@@ -139,7 +140,7 @@ export function TopNav() {
                     onClick={() => setAccountOpen(true)}
                     className="flex items-center gap-1 text-sm font-light text-foreground hover:text-primary transition-colors">
                     
-                  80 <span className="text-muted-foreground">→</span>
+                  {USER_CREDITS} <span className="text-muted-foreground">→</span>
                 </button>
               </div>
             </div>

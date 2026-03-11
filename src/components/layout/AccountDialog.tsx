@@ -17,7 +17,7 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[900px] w-[90vw] h-[80vh] p-0 gap-0 overflow-hidden">
+      <DialogContent className="max-w-[900px] w-[90vw] h-[80vh] p-0 gap-0 overflow-hidden bg-background/70 backdrop-blur-xl border-border/50">
         <div className="p-6 pb-0">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="bg-transparent border-b border-border rounded-none w-full justify-start gap-6 px-0 h-auto pb-0">

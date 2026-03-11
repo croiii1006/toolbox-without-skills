@@ -23,20 +23,20 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
             <TabsList className="bg-transparent border-b border-border rounded-none w-full justify-start gap-6 px-0 h-auto pb-0">
               <TabsTrigger
                 value="account"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 text-base font-semibold"
-              >
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 text-base font-semibold">
+                
                 {t('common.accountManagement')}
               </TabsTrigger>
               <TabsTrigger
                 value="usage"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 text-base font-semibold text-muted-foreground"
-              >
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 text-base font-semibold text-muted-foreground">
+                
                 {t('common.usage')}
               </TabsTrigger>
               <TabsTrigger
                 value="invoices"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 text-base font-semibold text-muted-foreground"
-              >
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 text-base font-semibold text-muted-foreground">
+                
                 {t('common.invoices')}
               </TabsTrigger>
             </TabsList>
@@ -65,18 +65,18 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
 
               <div className="border border-border rounded-xl p-6">
                 <div className="flex gap-8 mb-6">
-                  <span className="text-base font-semibold text-foreground border-b-2 border-foreground pb-2">
+                  <span className="text-base text-foreground border-b-2 border-foreground pb-2 font-light">
                     {t('common.accountManagement')}
                   </span>
                 </div>
                 <div className="space-y-4 text-sm">
                   <div className="flex items-center">
-                    <span className="text-muted-foreground w-40">{t('common.currentPlan')}</span>
+                    <span className="text-muted-foreground w-40 font-thin">{t('common.currentPlan')}</span>
                     <span className="text-foreground">Free</span>
                   </div>
                   <div className="flex items-center">
                     <span className="text-muted-foreground w-40">{t('common.availableCredits')}</span>
-                    <span className="text-foreground">80</span>
+                    <span className="text-foreground font-normal">80</span>
                   </div>
                 </div>
               </div>
@@ -126,6 +126,6 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
           </Tabs>
         </div>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>);
+
 }

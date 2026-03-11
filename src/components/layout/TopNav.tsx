@@ -90,19 +90,6 @@ export function TopNav() {
                 </div>
                 <span className="text-sm font-semibold text-foreground">0</span>
               </div>
-              {/* Daily Free Credits */}
-              <div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <CalendarClock className="w-4 h-4" />
-                    {t('common.dailyFreeCredits')}
-                  </div>
-                  <span className="text-sm font-semibold text-foreground">80</span>
-                </div>
-                <p className="text-xs text-muted-foreground/70 mt-1 ml-6">
-                  {t('common.dailyResetNote', { count: 80 })}
-                </p>
-              </div>
               <div className="border-t border-border" />
               {/* Usage Details */}
               <button

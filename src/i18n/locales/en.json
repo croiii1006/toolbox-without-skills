@@ -16,6 +16,8 @@
     "usageDetails": "Usage Details",
     "currentPlan": "Current Plan",
     "availableCredits": "Available Credits",
+    "subscriptionCredits": "Subscription",
+    "topupCredits": "Top-up",
     "monthlyCredits": "Monthly Credits",
     "dailyCredits": "Daily Credits",
     "editProfile": "Edit Profile",

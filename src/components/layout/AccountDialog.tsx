@@ -23,7 +23,7 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
             <TabsList className="bg-transparent border-b border-border rounded-none w-full justify-start gap-6 px-0 h-auto pb-0">
               <TabsTrigger
                 value="account"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 text-base font-semibold">
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none px-1 pb-3 text-base font-normal">
                 
                 {t('common.accountManagement')}
               </TabsTrigger>

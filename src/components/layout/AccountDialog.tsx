@@ -43,7 +43,7 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
 
             {/* Account Tab */}
             <TabsContent value="account" className="mt-6 space-y-6">
-              <div className="border border-border rounded-xl p-6 flex items-center justify-between">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <Avatar className="w-14 h-14">
                     <AvatarFallback className="bg-primary text-primary-foreground text-xl font-semibold">
@@ -57,13 +57,13 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                 </div>
                 <div className="flex items-center gap-2">
                   <Button variant="outline" size="sm" className="gap-1.5 rounded-lg">
-                    <LogOut className="w-4 h-4" />
+                    <LogOut className="w-4 h-4 text-orange-500" />
                     {t('common.logout')}
                   </Button>
                 </div>
               </div>
 
-              <div className="border border-border rounded-xl p-6">
+              <div className="border-t border-border pt-6">
                 <div className="flex gap-8 mb-6">
                   <span className="text-base text-foreground border-b-2 border-foreground pb-2 font-light">
                     {t('common.accountManagement')}

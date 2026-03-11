@@ -55,8 +55,10 @@ export function TopNav() {
 
 
         {/* Upgrade + Credits Pill */}
-        <button
-          onClick={() => setAccountOpen(true)}
+        <a
+          href="https://www.oran.cn/"
+          target="_blank"
+          rel="noopener noreferrer"
           className="flex items-center gap-0 rounded-full bg-foreground text-background text-xs font-semibold overflow-hidden h-8 hover:opacity-90 transition-opacity"
         >
           <span className="px-3 py-1.5">{t('common.upgrade')}</span>
@@ -64,7 +66,7 @@ export function TopNav() {
             <Zap className="w-3.5 h-3.5 fill-current" />
             80
           </span>
-        </button>
+        </a>
 
         {/* Avatar with Hover Card */}
         <HoverCard openDelay={200} closeDelay={300}>

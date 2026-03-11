@@ -52,8 +52,8 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="text-base font-semibold text-foreground">John Doe</p>
-                    <p className="text-sm text-muted-foreground font-light">john.doe@example.com</p>
+                    <p className="text-base font-semibold text-foreground">{USER_NAME}</p>
+                    <p className="text-sm text-muted-foreground font-light">{USER_EMAIL}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">

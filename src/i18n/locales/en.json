@@ -8,7 +8,20 @@
     "billing": "Billing",
     "team": "Team",
     "logout": "Log out",
-    "memoryLibrary": "Memory Library"
+    "memoryLibrary": "Memory Library",
+    "upgrade": "Upgrade",
+    "credits": "Credits",
+    "dailyFreeCredits": "Daily Free Credits",
+    "dailyResetNote": "Resets to {{count}} free credits daily",
+    "usageDetails": "Usage Details",
+    "currentPlan": "Current Plan",
+    "availableCredits": "Available Credits",
+    "monthlyCredits": "Monthly Credits",
+    "dailyCredits": "Daily Credits",
+    "editProfile": "Edit Profile",
+    "accountManagement": "Account",
+    "usage": "Usage",
+    "invoices": "Invoices"
   },
   "modules": {
     "geoInsights": "GEO Insights",

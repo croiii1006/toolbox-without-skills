@@ -8,7 +8,20 @@
     "billing": "账单",
     "team": "团队",
     "logout": "退出登录",
-    "memoryLibrary": "记忆库"
+    "memoryLibrary": "记忆库",
+    "upgrade": "升级",
+    "credits": "积分",
+    "dailyFreeCredits": "每日免费积分",
+    "dailyResetNote": "每天重置为{{count}}免费积分",
+    "usageDetails": "使用详情",
+    "currentPlan": "当前订阅",
+    "availableCredits": "可用积分",
+    "monthlyCredits": "每月更新积分",
+    "dailyCredits": "每日更新积分",
+    "editProfile": "编辑资料",
+    "accountManagement": "账户管理",
+    "usage": "用量",
+    "invoices": "账单"
   },
   "modules": {
     "geoInsights": "GEO Insights",

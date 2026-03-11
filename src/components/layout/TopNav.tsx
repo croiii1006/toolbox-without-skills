@@ -129,7 +129,7 @@ export function TopNav() {
                   className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-semibold px-5"
                   asChild>
                   
-                <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer" className="font-light">
                   {t('common.upgrade')}
                 </a>
               </Button>

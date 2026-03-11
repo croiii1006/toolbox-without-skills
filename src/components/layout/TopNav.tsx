@@ -1,36 +1,21 @@
-import { Bell, Settings, ChevronDown, BarChart3, MessageSquare, Wand2, Globe, Database } from 'lucide-react';
+import { Bell, ChevronDown, Globe, Database, Zap } from 'lucide-react';
 import logoDark from '@/assets/logo_dark.svg';
 import { useModule } from '@/contexts/ModuleContext';
 import { MODULES, ModuleType } from '@/types/modules';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger } from
-'@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
 import { MemoryLibraryDrawer } from '@/components/modules/memory/MemoryLibraryDrawer';
 import { useMemory } from '@/contexts/MemoryContext';
-
-const moduleIcons: Record<ModuleType, React.ReactNode> = {
-  'geo-insights': <BarChart3 className="w-4 h-4" />,
-  'llm-console': <MessageSquare className="w-4 h-4" />,
-  'ai-toolbox': <Wand2 className="w-4 h-4" />
-};
-
-const moduleKeys: Record<ModuleType, string> = {
-  'geo-insights': 'geoInsights',
-  'llm-console': 'llmConsole',
-  'ai-toolbox': 'aiToolbox'
-};
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { AccountDialog } from './AccountDialog';
+import { useState } from 'react';
 
 export function TopNav() {
   const { activeModule, setActiveModule } = useModule();
   const { t, i18n } = useTranslation();
   const { drawerOpen, setDrawerOpen } = useMemory();
+  const [accountOpen, setAccountOpen] = useState(false);
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'zh' ? 'en' : 'zh';
@@ -46,8 +31,6 @@ export function TopNav() {
         <span className="text-lg font-normal">Oran Gen</span>
       </div>
 
-      {/* Center: Module Switcher */}
-
       {/* Right: User Actions */}
       <div className="flex items-center gap-2">
         {/* Memory Library */}
@@ -56,7 +39,6 @@ export function TopNav() {
             size="sm"
             className="text-muted-foreground hover:text-foreground hover:bg-foreground/10 flex items-center gap-1.5"
             onClick={() => setDrawerOpen(true)}>
-            
           <Database className="w-4 h-4" />
           <span className="text-xs font-medium">{t('common.memoryLibrary')}</span>
         </Button>
@@ -67,32 +49,72 @@ export function TopNav() {
             size="sm"
             className="text-muted-foreground hover:text-foreground hover:bg-foreground/10 flex items-center gap-1"
             onClick={toggleLanguage}>
-            
           <Globe className="w-4 h-4" />
           <span className="text-xs font-medium">{i18n.language === 'zh' ? '中文' : 'EN'}</span>
         </Button>
 
-        
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="flex items-center gap-2 pl-2 pr-1 hover:bg-foreground/10">
-              <Avatar className="w-7 h-7">
-                <AvatarFallback className="bg-primary text-primary-foreground text-xs">
+        {/* Notification Bell */}
+        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-foreground/10 w-8 h-8">
+          <Bell className="w-4 h-4" />
+        </Button>
+
+        {/* Upgrade + Credits Pill */}
+        <button
+          onClick={() => setAccountOpen(true)}
+          className="flex items-center gap-0 rounded-full bg-foreground text-background text-xs font-semibold overflow-hidden h-8 hover:opacity-90 transition-opacity"
+        >
+          <span className="px-3 py-1.5">{t('common.upgrade')}</span>
+          <span className="flex items-center gap-1 px-3 py-1.5 bg-foreground/80 border-l border-background/20">
+            <Zap className="w-3.5 h-3.5 fill-current" />
+            80
+          </span>
+        </button>
+
+        {/* Avatar with Hover Card */}
+        <HoverCard openDelay={200} closeDelay={300}>
+          <HoverCardTrigger asChild>
+            <button className="rounded-full focus:outline-none">
+              <Avatar className="w-8 h-8 cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all">
+                <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">
                   JD
                 </AvatarFallback>
               </Avatar>
-              <ChevronDown className="w-4 h-4 text-muted-foreground" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem>{t('common.billing')}</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>{t('common.logout')}</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </button>
+          </HoverCardTrigger>
+          <HoverCardContent align="end" className="w-72 p-4 rounded-2xl">
+            <div className="flex flex-col items-center gap-3">
+              <Avatar className="w-14 h-14">
+                <AvatarFallback className="bg-primary text-primary-foreground text-lg font-semibold">
+                  JD
+                </AvatarFallback>
+              </Avatar>
+              <div className="text-center">
+                <p className="text-sm font-semibold text-foreground">John Doe</p>
+                <p className="text-xs text-muted-foreground truncate max-w-[200px]">john.doe@example.com</p>
+              </div>
+              <Button
+                size="sm"
+                className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-semibold px-5"
+                onClick={() => setAccountOpen(true)}
+              >
+                {t('common.upgrade')}
+              </Button>
+              <div className="w-full flex items-center justify-between pt-2 border-t border-border">
+                <span className="text-sm text-muted-foreground">{t('common.credits')}</span>
+                <button
+                  onClick={() => setAccountOpen(true)}
+                  className="flex items-center gap-1 text-sm font-semibold text-foreground hover:text-primary transition-colors"
+                >
+                  80 <span className="text-muted-foreground">→</span>
+                </button>
+              </div>
+            </div>
+          </HoverCardContent>
+        </HoverCard>
       </div>
     </header>
     <MemoryLibraryDrawer open={drawerOpen} onOpenChange={setDrawerOpen} />
-    </>);
-
+    <AccountDialog open={accountOpen} onOpenChange={setAccountOpen} />
+    </>
+  );
 }

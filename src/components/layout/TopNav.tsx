@@ -137,7 +137,7 @@ export function TopNav() {
                 <span className="text-sm text-muted-foreground">{t('common.credits')}</span>
                 <button
                     onClick={() => setAccountOpen(true)}
-                    className="flex items-center gap-1 text-sm font-semibold text-foreground hover:text-primary transition-colors">
+                    className="flex items-center gap-1 text-sm font-light text-foreground hover:text-primary transition-colors">
                     
                   80 <span className="text-muted-foreground">→</span>
                 </button>

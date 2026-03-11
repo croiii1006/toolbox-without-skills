@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
-import { USER_CREDITS, USER_NAME, USER_EMAIL, USER_INITIALS, USER_PLAN } from '@/constants/user';
+import { USER_CREDITS, USER_SUBSCRIPTION_CREDITS, USER_TOPUP_CREDITS, USER_NAME, USER_EMAIL, USER_INITIALS, USER_PLAN } from '@/constants/user';
 
 interface AccountDialogProps {
   open: boolean;
@@ -78,6 +78,14 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                   <div className="flex items-center">
                     <span className="text-muted-foreground w-40 font-light">{t('common.availableCredits')}</span>
                     <span className="text-foreground font-normal">{USER_CREDITS}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-muted-foreground w-40 font-light pl-4">{t('common.subscriptionCredits')}</span>
+                    <span className="text-foreground font-light">{USER_SUBSCRIPTION_CREDITS}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-muted-foreground w-40 font-light pl-4">{t('common.topupCredits')}</span>
+                    <span className="text-foreground font-light">{USER_TOPUP_CREDITS}</span>
                   </div>
                 </div>
               </div>

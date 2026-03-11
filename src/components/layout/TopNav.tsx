@@ -94,7 +94,7 @@ export function TopNav() {
               {/* Usage Details */}
               <button
                   onClick={() => setAccountOpen(true)}
-                  className="flex items-center gap-1 text-sm font-semibold text-foreground hover:text-primary transition-colors">
+                  className="flex items-center gap-1 text-sm font-light text-foreground hover:text-primary transition-colors">
                   
                 {t('common.usageDetails')} <span>›</span>
               </button>

@@ -76,7 +76,7 @@ export function TopNav() {
               <div className="flex items-center justify-between">
                 <span className="text-lg font-semibold text-foreground">Free</span>
                 <Button size="sm" className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-semibold px-4" asChild>
-                  <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer" className="font-light">
                     {t('common.upgrade')}
                   </a>
                 </Button>

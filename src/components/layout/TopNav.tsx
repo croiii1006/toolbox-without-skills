@@ -61,7 +61,7 @@ export function TopNav() {
                 href="https://www.oran.cn/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-0 rounded-full bg-muted text-foreground text-xs font-light overflow-hidden h-8 hover:opacity-90 transition-opacity">
+                className="flex items-center gap-0 rounded-full text-foreground text-xs font-light overflow-hidden h-8 hover:opacity-90 transition-opacity bg-transparent border-solid border border-secondary">
                 
               <span className="px-3 py-1.5">{t('common.upgrade')}</span>
               <span className="flex items-center gap-1 px-3 py-1.5 border-l border-border font-light bg-transparent">

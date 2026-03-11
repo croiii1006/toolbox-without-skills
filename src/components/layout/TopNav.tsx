@@ -1,4 +1,4 @@
-import { ChevronDown, Globe, Database, Zap } from 'lucide-react';
+import { ChevronDown, Globe, Database, Zap, Sparkles, CalendarClock } from 'lucide-react';
 import logoDark from '@/assets/logo_dark.svg';
 import { useModule } from '@/contexts/ModuleContext';
 import { MODULES, ModuleType } from '@/types/modules';
@@ -54,19 +54,66 @@ export function TopNav() {
         </Button>
 
 
-        {/* Upgrade + Credits Pill */}
-        <a
-          href="https://www.oran.cn/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-0 rounded-full bg-foreground text-background text-xs font-semibold overflow-hidden h-8 hover:opacity-90 transition-opacity"
-        >
-          <span className="px-3 py-1.5">{t('common.upgrade')}</span>
-          <span className="flex items-center gap-1 px-3 py-1.5 bg-foreground/80 border-l border-background/20">
-            <Zap className="w-3.5 h-3.5 fill-current" />
-            80
-          </span>
-        </a>
+        {/* Upgrade + Credits Pill with Hover Card */}
+        <HoverCard openDelay={200} closeDelay={300}>
+          <HoverCardTrigger asChild>
+            <a
+              href="https://www.oran.cn/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-0 rounded-full bg-foreground text-background text-xs font-semibold overflow-hidden h-8 hover:opacity-90 transition-opacity"
+            >
+              <span className="px-3 py-1.5">{t('common.upgrade')}</span>
+              <span className="flex items-center gap-1 px-3 py-1.5 bg-foreground/80 border-l border-background/20">
+                <Zap className="w-3.5 h-3.5 fill-current" />
+                80
+              </span>
+            </a>
+          </HoverCardTrigger>
+          <HoverCardContent align="end" className="w-80 p-5 rounded-2xl">
+            <div className="space-y-4">
+              {/* Plan + Upgrade */}
+              <div className="flex items-center justify-between">
+                <span className="text-lg font-semibold text-foreground">Free</span>
+                <Button size="sm" className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-semibold px-4" asChild>
+                  <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer">
+                    {t('common.upgrade')}
+                  </a>
+                </Button>
+              </div>
+              <div className="border-t border-border" />
+              {/* Credits */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Sparkles className="w-4 h-4" />
+                  {t('common.credits')}
+                </div>
+                <span className="text-sm font-semibold text-foreground">0</span>
+              </div>
+              {/* Daily Free Credits */}
+              <div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CalendarClock className="w-4 h-4" />
+                    {t('common.dailyFreeCredits')}
+                  </div>
+                  <span className="text-sm font-semibold text-foreground">80</span>
+                </div>
+                <p className="text-xs text-muted-foreground/70 mt-1 ml-6">
+                  {t('common.dailyResetNote', { count: 80 })}
+                </p>
+              </div>
+              <div className="border-t border-border" />
+              {/* Usage Details */}
+              <button
+                onClick={() => setAccountOpen(true)}
+                className="flex items-center gap-1 text-sm font-semibold text-foreground hover:text-primary transition-colors"
+              >
+                {t('common.usageDetails')} <span>›</span>
+              </button>
+            </div>
+          </HoverCardContent>
+        </HoverCard>
 
         {/* Avatar with Hover Card */}
         <HoverCard openDelay={200} closeDelay={300}>

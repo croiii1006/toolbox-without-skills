@@ -73,7 +73,7 @@ export function AccountDialog({ open, onOpenChange }: AccountDialogProps) {
                 <div className="space-y-4 text-sm">
                   <div className="flex items-center">
                     <span className="text-muted-foreground w-40 font-thin">{t('common.currentPlan')}</span>
-                    <span className="text-foreground font-light">Free</span>
+                    <span className="text-foreground font-light">{USER_PLAN}</span>
                   </div>
                   <div className="flex items-center">
                     <span className="text-muted-foreground w-40 font-light">{t('common.availableCredits')}</span>

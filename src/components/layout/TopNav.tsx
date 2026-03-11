@@ -61,10 +61,10 @@ export function TopNav() {
                 href="https://www.oran.cn/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-0 rounded-xl bg-foreground text-background text-xs font-normal overflow-hidden h-8 hover:opacity-90 transition-opacity">
+                className="flex items-center gap-0 rounded-full bg-foreground text-background text-xs font-semibold overflow-hidden h-8 hover:opacity-90 transition-opacity">
                 
-              <span className="px-3 py-1.5">{t('common.upgrade')}</span>
-              <span className="flex items-center gap-1 px-3 py-1.5  border-l border-background/20">
+              <span className="px-3 py-1.5 font-light">{t('common.upgrade')}</span>
+              <span className="flex items-center gap-1 px-3 py-1.5 bg-foreground/80 border-l border-background/20 font-light">
                 <Zap className="w-3.5 h-3.5 fill-current" />
                 80
               </span>
@@ -74,8 +74,8 @@ export function TopNav() {
             <div className="space-y-4">
               {/* Plan + Upgrade */}
               <div className="flex items-center justify-between">
-                <span className="text-lg font-light text-foreground">Free</span>
-                <Button size="sm" className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-normal px-4" asChild>
+                <span className="text-lg font-semibold text-foreground">Free</span>
+                <Button size="sm" className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-semibold px-4" asChild>
                   <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer">
                     {t('common.upgrade')}
                   </a>
@@ -85,16 +85,16 @@ export function TopNav() {
               {/* Credits */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Sparkles className="w-4 h-10" />
+                  <Sparkles className="w-4 h-4" />
                   {t('common.credits')}
                 </div>
-                <span className="text-sm font-light text-foreground">0</span>
+                <span className="text-sm font-semibold text-foreground">0</span>
               </div>
               
               {/* Usage Details */}
               <button
                   onClick={() => setAccountOpen(true)}
-                  className="flex items-center gap-1 text-sm font-light text-foreground hover:text-primary transition-colors">
+                  className="flex items-center gap-1 text-sm font-semibold text-foreground hover:text-primary transition-colors">
                   
                 {t('common.usageDetails')} <span>›</span>
               </button>
@@ -126,7 +126,7 @@ export function TopNav() {
               </div>
               <Button
                   size="sm"
-                  className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-light px-5"
+                  className="rounded-lg bg-foreground text-background hover:bg-foreground/90 text-xs font-semibold px-5"
                   asChild>
                   
                 <a href="https://www.oran.cn/" target="_blank" rel="noopener noreferrer">
@@ -137,7 +137,7 @@ export function TopNav() {
                 <span className="text-sm text-muted-foreground">{t('common.credits')}</span>
                 <button
                     onClick={() => setAccountOpen(true)}
-                    className="flex items-center gap-1 text-sm font-light text-foreground hover:text-primary transition-colors">
+                    className="flex items-center gap-1 text-sm font-semibold text-foreground hover:text-primary transition-colors">
                     
                   80 <span className="text-muted-foreground">→</span>
                 </button>

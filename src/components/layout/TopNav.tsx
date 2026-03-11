@@ -70,7 +70,7 @@ export function TopNav() {
               </span>
             </a>
           </HoverCardTrigger>
-          <HoverCardContent align="end" className="w-80 p-5 rounded-2xl">
+          <HoverCardContent align="end" className="w-80 p-5 rounded-2xl bg-background/70 backdrop-blur-xl border-border/50">
             <div className="space-y-4">
               {/* Plan + Upgrade */}
               <div className="flex items-center justify-between">

@@ -379,18 +379,23 @@ export function CampaignPlannerComposer({ onSubmit, disabled, initialData }: Cam
               </button>
             </div>
 
-            <button
-              onClick={handleSend}
-              disabled={!canSend || disabled}
-              className={cn(
-                'w-9 h-9 rounded-full flex items-center justify-center transition-all',
-                canSend && !disabled ?
-                'bg-foreground text-background hover:bg-foreground/90' :
-                'bg-muted/60 text-muted-foreground/40 cursor-not-allowed'
-              )}>
-              
-              <ArrowUp className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-muted-foreground/70 tabular-nums">
+                预计消耗：约 <span className="text-foreground/80 font-medium">200</span> credit
+              </span>
+              <button
+                onClick={handleSend}
+                disabled={!canSend || disabled}
+                className={cn(
+                  'w-9 h-9 rounded-full flex items-center justify-center transition-all',
+                  canSend && !disabled ?
+                  'bg-foreground text-background hover:bg-foreground/90' :
+                  'bg-muted/60 text-muted-foreground/40 cursor-not-allowed'
+                )}>
+                
+                <ArrowUp className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
 
